@@ -1,0 +1,91 @@
+html {
+    --bg-color: hsl(0, 0%, 10%);
+    --bg-color-darker: hsl(0, 0%, 5%);
+    --font-color: hsl(0, 0%, 85%);
+    --sidebar-font-color: hsl(183, 29%, 49%);
+    --hover-font-color: hsl(183, 50%, 70%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100%;
+    transition: margin-left .5s;
+    color: var(--font-color);
+    background-color: var(--bg-color);
+}
+
+#main {
+    padding: 20px;
+    transition: margin-left .5s;
+    font-size: 16px;
+}
+
+#open_navbar {
+    position: fixed;
+    border-radius: 0.4rem;
+    background-color: var(--bg-color-darker);
+    color: var(--sidebar-font-color);
+    font-size: 1.5rem;
+    padding: 6px 6px 6px 6px;
+    margin-left: 0%;
+}
+
+#open_navbar:hover {
+    color: var(--hover-font-color);
+}
+
+.side_navbar {
+    height: 100%;
+    /* 100% Full-height */
+    width: 0;
+    /* 0 width - change this with JavaScript */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Stay on top */
+    top: 0;
+    /* Stay at the top */
+    left: 0;
+    background-color: var(--bg-color-darker);
+    /* Black*/
+    overflow-x: hidden;
+    /* Disable horizontal scroll */
+    padding-top: 60px;
+    /* Place content 60px from the top */
+    transition: 0.5s;
+    /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.side_navbar a {
+    padding: 8px 8px 8px 4px;
+    color: var(--sidebar-font-color);
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    transition: 0.3s;
+}
+
+.side_navbar a:hover {
+    color: var(--hover-font-color);
+}
+
+.side_navbar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main p {
+    flex: auto;
+    text-align: justify;
+    margin-left: 2rem;
+}
+
+@media screen and (max-height: 450px) {
+    .side_navbar {
+        padding-top: 15px;
+    }
+
+    .side_navbar a {
+        font-size: 1.2rem;
+    }
+}
