@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js navy">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -53,7 +53,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -79,7 +79,7 @@
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
             html.classList.remove('no-js')
-            html.classList.remove('light')
+            html.classList.remove('navy')
             html.classList.add(theme);
             html.classList.add('js');
         </script>
@@ -98,7 +98,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">Blender shaders</a></li><li class="chapter-item expanded "><a href="mnode/index.html"><strong aria-hidden="true">1.</strong> The math node</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="mnode/basics.html"><strong aria-hidden="true">1.1.</strong> The basics</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">Blender shaders</a></li><li class="chapter-item expanded affix "><a href="shaders.html">What is a shader</a></li><li class="chapter-item expanded "><a href="mnode/index.html"><strong aria-hidden="true">1.</strong> The math node</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="mnode/basic_ops.html"><strong aria-hidden="true">1.1.</strong> Basic operations</a></li><li class="chapter-item expanded "><a href="mnode/coordinates.html"><strong aria-hidden="true">1.2.</strong> Coordinates</a></li></ol></li><li class="chapter-item expanded "><a href="resources.html">Resources</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -117,10 +117,10 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         
@@ -138,6 +138,10 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
+                        
+                        <a href="https://github.com/WannesMalfait/Blender-shaders" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
                         
                     </div>
                 </div>
@@ -168,13 +172,12 @@
                     <main>
                         <h1><a class="header" href="#about-this-book" id="about-this-book">About this Book</a></h1>
 <p>The goal of this book is to be a resource for people learning about procedural shaders in blender. It is still a <strong>work in progress</strong>. I don't know
-everything, and will therefore not be able to cover everything. The shaders from this book are also not optimized, and serve only as a learning resource.
-A lot of info can already be found on the <a href="https://docs.blender.org/manual/en/latest/render/shader_nodes/">official blender documentation</a>.
-If something in the book is not clear, you can try searching for help in the documentation. </p>
+everything, and will therefore not be able to cover everything. The shaders from this book are also not optimized, and serve only as a learning resource. I'm not the first person to write about shaders, so I highly recommend that you take a look at some other great sources as well. A list of these resources can be found <a href="resources.html">here</a>.</p>
 <p>The book focuses on creating procedural shaders in blender, i.e. it is <strong>not</strong> a tutorial for blender itself. The early chapters are aimed at complete beginners, and serve as a replacement for my series on youtube: <a href="https://youtube.com/playlist?list=PLHwudW8KFVowaZMvH7DGsxSaHE_qPvX_k">Math in the node editor</a>.
-Here we will look at how we can manipulate coordinates to create all sorts of cool effects. Later chapters will be more advanced and cover more interesting topics such as vector displacement. There will also be a small chapter on python scripting. </p>
+Here we will look at how we can manipulate coordinates to create all sorts of cool effects. Later chapters will be more advanced and cover more interesting topics such as vector displacement. There will also be a small chapter on python scripting. Each chapter will have examples where we create shaders using the things we learned.</p>
 <h2><a class="header" href="#acknowledgement" id="acknowledgement">Acknowledgement</a></h2>
-<p>This book was written using <a href="https://github.com/rust-lang/mdBook">mdbook</a>. It would not have been possible without the loving community of Rustaceans.</p>
+<p>This book was written using <a href="https://github.com/rust-lang/mdBook">mdbook</a>. 
+It would not have been possible without the loving community of Rustaceans.</p>
 
                     </main>
 
@@ -183,7 +186,7 @@ Here we will look at how we can manipulate coordinates to create all sorts of co
                         
 
                         
-                            <a rel="next" href="mnode/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="shaders.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -197,7 +200,7 @@ Here we will look at how we can manipulate coordinates to create all sorts of co
                 
 
                 
-                    <a rel="next" href="mnode/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="shaders.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
