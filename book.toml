@@ -4,6 +4,11 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Blender Shaders"
+
 [output.html]
+default-theme = "navy"
+git-repository-url = "https://github.com/WannesMalfait/Blender-shaders"
+git-repository-icon = "fa-github"
 mathjax-support = true
-site-url = "/Blender-Shaders/"
+site-url = "/Blender-shaders/"
+input-404 = "404.md"

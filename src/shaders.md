@@ -1,1 +1,11 @@
 # What is a shader
+
+Although there are varying definitions for what a shader is, a simple way to think about them is as programs that are run on a Graphics Processing Unit (GPU). A GPU, unlike a Central Processing Unit (CPU), is built to do a single operation many times in parallel very quickly. These operations can range from things like adding two numbers to calculating the sine of a value. This makes a GPU a very powerful tool when dealing with images, because images are made up of a large number of pixels that would take a long time to edit one at a time. The shaders that we will be looking at in this book are all so-called _fragment shaders_. Other types of shaders are vertex shaders, compute shaders and geometry shaders.
+
+## Fragment shaders
+
+In the whole process of converting 3D data to a 2D image, the fragment shader or pixel shader is one of the last steps. Simply put, it's goal is to assign a color to a pixel. It takes as input a fragment (i.e. a collection of values like coordinates which were calculated in a previous step) as wel as some uniform variables. Uniform variables are external variables like the current time or the height and width of the image. Uniform values are the same for every pixel (thats where the name uniform comes from). Per fragment the shader outputs a pixel color. It is possible that multiple fragments end up in the same pixel, e.g think of  semi-transparent objects. After the fragment shader is done, some post-processing may be applied before the final image. 
+
+## What you need to know for blender
+
+When we make a shader in the node editor, you have to remember that everything we do is calculated at least once per pixel. When the shader is compiled it is passed to the processors in the GPU. These processors are independent (i.e. they do not know the values of the other processors) and forget what they computed in the previous step. In blenders node editor there is also no control flow, this means that common things from programming languages like if-statements and loops are not available. Increasing the number of samples means that the compiled shader is run multiple times, each time with a small random offset. These samples are then combined to create a smooth output. 
