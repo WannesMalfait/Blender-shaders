@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Blender Shaders</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Blender shaders</a></li><li class="chapter-item expanded affix "><a href="shaders.html">What is a shader</a></li><li class="chapter-item expanded "><a href="mnode/index.html"><strong aria-hidden="true">1.</strong> The math node</a></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">1.1.</strong> Sockets</div></li><li class="chapter-item expanded "><a href="mnode/basic_ops.html"><strong aria-hidden="true">1.2.</strong> Basic operations</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.3.</strong> Coordinates</div></li></ol></li><li class="chapter-item expanded "><a href="resources.html">Resources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Blender Shaders</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/WannesMalfait/Blender-shaders" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#about-this-book" id="about-this-book">About this Book</a></h1>
+<p>The goal of this book is to be a resource for people learning about procedural shaders in blender. It is still a <strong>work in progress</strong>. I don't know
+everything, and will therefore not be able to cover everything. The shaders from this book are also not optimized, and serve only as a learning resource. I'm not the first person to write about shaders, so I highly recommend that you take a look at some other great sources as well. A list of these resources can be found <a href="resources.html">here</a>.</p>
+<p>The book focuses on creating procedural shaders in blender, i.e. it is <strong>not</strong> a tutorial for blender itself. The early chapters are aimed at complete beginners, and serve as a replacement for my series on youtube: <a href="https://youtube.com/playlist?list=PLHwudW8KFVowaZMvH7DGsxSaHE_qPvX_k">Math in the node editor</a>.
+Here we will look at how we can manipulate coordinates to create all sorts of cool effects. Later chapters will be more advanced and cover more interesting topics such as vector displacement. There will also be a small chapter on python scripting. Each chapter will have examples where we create shaders using the things we learned.</p>
+<h2><a class="header" href="#acknowledgement" id="acknowledgement">Acknowledgement</a></h2>
+<p>This book was written using <a href="https://github.com/rust-lang/mdBook">mdbook</a>. 
+It would not have been possible without the loving community of Rustaceans.</p>
+<h1><a class="header" href="#what-is-a-shader" id="what-is-a-shader">What is a shader</a></h1>
+<p>Although there are varying definitions for what a shader is, a simple way to think about them is as programs that are run on a Graphics Processing Unit (GPU). A GPU, unlike a Central Processing Unit (CPU), is built to do a single operation many times in parallel very quickly. These operations can range from things like adding two numbers to calculating the sine of a value. This makes a GPU a very powerful tool when dealing with images, because images are made up of a large number of pixels that would take a long time to edit one at a time. The shaders that we will be looking at in this book are all so-called <em>fragment shaders</em>. Other types of shaders are vertex shaders, compute shaders and geometry shaders.</p>
+<h2><a class="header" href="#fragment-shaders" id="fragment-shaders">Fragment shaders</a></h2>
+<p>In the whole process of converting 3D data to a 2D image, the fragment shader or pixel shader is one of the last steps. Simply put, it's goal is to assign a color to a pixel. It takes as input a fragment (i.e. a collection of values like coordinates which were calculated in a previous step) as wel as some uniform variables. Uniform variables are external variables like the current time or the height and width of the image. Uniform values are the same for every pixel (thats where the name uniform comes from). Per fragment the shader outputs a pixel color. It is possible that multiple fragments end up in the same pixel, e.g think of  semi-transparent objects. After the fragment shader is done, some post-processing may be applied before the final image. </p>
+<h2><a class="header" href="#what-you-need-to-know-for-blender" id="what-you-need-to-know-for-blender">What you need to know for blender</a></h2>
+<p>When we make a shader in the node editor, you have to remember that everything we do is calculated at least once per pixel. When the shader is compiled it is passed to the processors in the GPU. These processors are independent (i.e. they do not know the values of the other processors) and forget what they computed in the previous step. In blenders node editor there is also no control flow, this means that common things from programming languages like if-statements and loops are not available. Increasing the number of samples means that the compiled shader is run multiple times, each time with a small random offset. These samples are then combined to create a smooth output image. </p>
+<h1><a class="header" href="#your-journey-begins" id="your-journey-begins">Your journey begins</a></h1>
+<p>In this chapter we will learn how to use math to create shaders. Before we begin I will share my setup for creating shaders in blender. In the beginning these shaders will all be 2D, and we will therefore use a plane as our primitive. If you already have your own setup that you're comfortable with, you can jump right to the <a href="mnode/basic_ops.html">next section</a>.</p>
+<h2><a class="header" href="#setup" id="setup">Setup</a></h2>
+<p>Make sure that you have the node wrangler add-on enabled (it is a built-in plugin).</p>
+<h3><a class="header" href="#layout" id="layout">Layout</a></h3>
+<p>Starting from the default blend file open up the shading workspace. Then edit edit the layout so that the file explorer, render preview, and image editor are gone. It should look something like this:</p>
+<p><img src="mnode/images/setup1.png" alt="First part of setup" /></p>
+<p>Next change the outliner to the 3D viewport and replace the default cube with a plane. Make sure the default material is assigned to the plane. Then switch the view to top orthographic and turn off all overlays and gizmos. Turn switch the display to rendered. We will use this section as our shader preview. You can resize it to be bigger if you want. The final result should look something like this:</p>
+<p><img src="mnode/images/setup2.png" alt="Final part of setup" /></p>
+<p>If you want this to be the default every time you open blender you can go to &quot;File &gt; Defaults &gt; Save startup file&quot;. Optionally you can also start with <a href="mnode/blendfiles/default.blend">my default file</a>. </p>
+<h1><a class="header" href="#the-basics-of-the-math-node" id="the-basics-of-the-math-node">The basics of the math node</a></h1>
+<p>We will start from this node tree:</p>
+<p><img src="mnode/images/mn1.png" alt="Starting node group" /></p>
+<p>We will go into more detail on coordinates in a later chapter, for now all you need to know is that the object coordinates are centered at the object origin, and go from -1 to 1 in all three axes in this case. The separate xyz allows us to only look at one axis at a time, in this case the x-axis.</p>
+<h2><a class="header" href="#thinking-in-terms-of-ranges" id="thinking-in-terms-of-ranges">Thinking in terms of ranges</a></h2>
+<p>The current output shows black in the left half and grey values going to white in the right half. This is one way to describe the output, but from this it is not so clear what the actual output values are. A better way to think about the output image is as a <em>linear gradient from -1 to 1</em>. The <em>range</em> of the gradient is [-1, 1] in this case. What this means is that the pixel value as you move from one side to the other changes from -1 to 1. The change here is along the x axis and goes from left to right (from lower values to bigger values). Because values below 0 are displayed as black, the left half of the image is black. If the gradient was along the y-axis then it would be going from the bottom to the top. </p>
+<p>In addition to the range of values, we can also talk about the <em>shape</em> of the gradient. In this case the shape is linear, because when we plot the value of each pixel as we move from left to right the plotted shape is a line:</p>
+<p><img src="mnode/images/lin_grad.png" alt="Linear gradient" /></p>
+<p>The most common shape is a linear gradient. </p>
+<h2><a class="header" href="#the-math-node" id="the-math-node">The math node</a></h2>
+<p>Now that we have learned about gradients and ranges, it is time to manipulate them. In this section we will look at the most basic operations: add, subtract, multiply and divide. What happens when we add a math node in between the separate xyz node and the viewer node? The values that go into the viewer node will now first pass through the math node. The math node will apply an operation to the values that are passed in and return a new value. By default the math node is set to add, and both values set to 0.5. The add, subtract, multiply and divide modes only affect the range and not the shape.</p>
+<p><img src="mnode/images/mn2.png" alt="Node setup" /></p>
+<h3><a class="header" href="#add-and-subtract" id="add-and-subtract">Add and Subtract</a></h3>
+<p>Currently the range is [-1, 1]. When it passes through the math node 0.5 is added to every value in the range. Luckily we don't need to think about what happens to every value in the range. We only need to look at the the two endpoints, i.e -1 and 1. Because we add 0.5 to everything, the range changes from [-1, 1] to [-0.5, 1.5]. You can think of this as moving the line 0.5 units upwards or moving the gradient 0.5 units to the left, whichever is more intuitive for you. </p>
+<p>If we now change the value of the add node, the range will move left or right. Increasing the value of the second input means we make the values in the range bigger, causing them to move to the right on the number line. This means, however, that the darker values will move to the left in the range, and because of that we perceive it as moving the image to the left. If we instead add negative values the result is the complete opposite.</p>
+<p>A good way to see this, is to think about the middle value or center of the range. The center of a range represents its position. We can calculate the center of the range [a, b] as
+\[\frac{a+b}{2}\]
+If the range is [-1, 1] then the center is at 0. When we add 0.5 the new range is [-0.5, 1.5] and the center is now at 0.5. The old center, 0, is no longer in the center of the range but has moved to the left in the range, i.e. the old center is to the left of the new center. We will therefore see it as moving to the left. If we subtract values by changing the mode to subtract or by adding negative values, the range will move to the left and the old center will move to the right of the new center.</p>
+<p>In conclusion, the add mode allows us to reposition a range. This is sometimes referred to as translation. If we want to move things to the left we add positive numbers, and if we want to move things to the right we add negative numbers.</p>
+<h3><a class="header" href="#multiply-and-divide" id="multiply-and-divide">Multiply and Divide</a></h3>
+<p>We have now seen how to position a range. If this was the only thing we could do with ranges we would be very limited. Luckily the multiply mode allows us to scale the range. To see how this works let's look at an example once again.</p>
+<p><img src="mnode/images/mn3.png" alt="Multiply node" /></p>
+<p>The input range is [-1, 1], and we multiply everything by 0.5. This means that the new range is now [-0.5, 0.5]. The center of the old range was 0, and that of the new range is still 0. Therefore the position has not changed. What has changed however is the (signed) length of the range, which we can calculate as follows: 
+\[b-a\]
+The length of the range [-1, 1] is 2, while the length of the new range, [-0.5, 0.5], is 1. This is exactly \(0.5*2\), so the length of the old range multiplied by the value in the multiply socket. The length of the range has decreased, which we perceive visually as zooming in. If we were to multiply by a value greater than 1, say 2, then the length would increase giving the effect of zooming out. In addition to increasing or decreasing the length of the range, we can also think of multiplying as darkening or brightening an image. If we multiply by a value less than 1, the values get darker. If we multiply by a value greater than 1 the values get brighter.</p>
+<p>What happens if you multiply by a negative number? Let's say we multiply the range [-1, 1] with -1, then the new range is [1, -1]. We have flipped the range! This range has a signed length of -2, this means that instead of increasing from left to right, it now goes from right to left. Visually we perceive this as mirroring the range.</p>
+<h2><a class="header" href="#summary" id="summary">Summary</a></h2>
+<p>To move, translate or reposition a range we can use the &quot;add&quot; or &quot;subtract&quot; mode. To resize, scale or flip a range we can use the &quot;multiply&quot; or &quot;divide&quot; mode.</p>
+<hr />
+<h2><a class="header" href="#example-map-range-node-from-scratch" id="example-map-range-node-from-scratch">Example: map range node from scratch</a></h2>
+<p>To put our newly learned skills to the test we will recreate the map range node from scratch. The map range node is a very useful node that lets you go from one range to another, by specifying the endpoints. If we wanted to convert the range [-1, 1] to [0.5, 2] we would use these settings:</p>
+<p><img src="mnode/images/map_range.png" alt="map range node" /></p>
+<h3><a class="header" href="#steps-needed" id="steps-needed">Steps needed</a></h3>
+<p>To convert from one range [a, b] to the other [c, d] we will use the following steps:</p>
+<ol>
+<li>Subtract <code>a</code> from the range. This will convert it to the range [0, b-a].</li>
+<li>Make the input range have length 1 by dividing by its length \((b-a)\). The new range is now [0, 1]. In many cases when working with ranges, you want to work with a range from 0 to 1, or [-1, 1]. The reasons for this will become clear when we start changing the shape.</li>
+<li>Resize the range to the length of the output range by multiplying by \(d-c\). The range is now [0, d-c]. It already has the correct length.</li>
+<li>We position the range so that the endpoints match, by adding <code>c</code>. The new range is now [c, d]. This is the result we wanted.</li>
+</ol>
+<p>For the more mathematically inclined, the full formula looks like this:
+\[
+\frac{x-a}{b-a}(d-c) + c
+\]
+where \(x\) is the input range.</p>
+<h3><a class="header" href="#the-node-setup" id="the-node-setup">The node setup</a></h3>
+<p>Add a math node between the separate xyz and the viewer node. Select it and press <code>Ctrl + G</code> to make it into a node group. Open up the side panel by pressing <code>N</code> to add extra inputs to the node group. Make sure you have 5 inputs then rename them to something by which you can recognize them. </p>
+<p><img src="mnode/images/map_range2.png" alt="map range 2" /></p>
+<p>We will now follow the steps from above but using math nodes. If I refer to socket names, they are the same as in the picture. Notice how the computations with ranges we described earlier are easily translated to operations with the math node.</p>
+<ol>
+<li>Change the mode of the math node to &quot;Subtract&quot;, and connect the <code>a</code> socket with the second input of the subtract node.</li>
+<li>Add a divide node between the subtract node and the group output. Copy the subtract node (<code>Shift + D</code>), and connect the <code>a</code> socket to the second input and the <code>b</code> socket to the first input. (This node will thus compute \(b-a\)). Then plug the result of this subtract node into the second input of the divide node.</li>
+</ol>
+<p><img src="mnode/images/map_range3.png" alt="map range 3" /></p>
+<ol start="3">
+<li>Add a multiply node after the divide node, and a subtract node below the other subtract nodes. Plug the <code>c</code> socket into the second input of the subtract node and the <code>d</code> socket into the first input. Then plug the result of that into the second input of the multiply node.</li>
+<li>Now just add an add node after the multiply node and plug the <code>c</code> socket into the second input.</li>
+</ol>
+<p><img src="mnode/images/map_range4.png" alt="Final setup" /></p>
+<h4><a class="header" href="#final-example" id="final-example">Final example</a></h4>
+<p>Here is a simple example where we used the map range node group to change the range of a noise texture:</p>
+<p><img src="mnode/images/map_range5.png" alt="map range example" /></p>
+<h1><a class="header" href="#resources" id="resources">Resources</a></h1>
+<p>If you are interested in learning more about shaders, these resources might be what you're looking for.</p>
+<h2><a class="header" href="#blender-specific-resources" id="blender-specific-resources">Blender specific resources</a></h2>
+<ul>
+<li>The blender <a href="https://docs.blender.org/manual/en/latest/render/shader_nodes/">documentation</a> on shader nodes gives a description of each node and contains some examples as well.</li>
+<li>The very nice community of the <a href="https://discord.gg/C7AGyf9fxW">erindale.xyz</a> discord server, focused on procedural things in blender.</li>
+</ul>
+<h2><a class="header" href="#shader-resources" id="shader-resources">Shader resources</a></h2>
+<ul>
+<li><a href="https://thebookofshaders.com/">The book of shaders</a> is a great resources for learning shaders using WebGL. </li>
+<li>A whole lot of <a href="https://iquilezles.org/www/index.htm">articles</a> on computer graphics by Inigo Quilez.</li>
+<li>The <a href="https://www.youtube.com/channel/UCcAlTqd9zID6aNX3TzwxJXg">Art of Code</a> youtube channel has very good tutorials for writing shaders with Shadertoy.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
