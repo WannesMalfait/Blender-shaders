@@ -5,7 +5,7 @@ When working with nodes, it is very important to keep in mind that the data that
 - Values are indicated with greyish sockets
 - Colors are indicated with yellowish sockets
 - Vectors are indicated with blue/purplish sockets
-- Shaders used to be indicated with green sockets and are now indicated with red sockets.
+- Shaders are indicated with greenish sockets
 
 You can see the different types of sockets here:
 
