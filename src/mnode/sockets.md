@@ -13,7 +13,7 @@ You can see the different types of sockets here:
 
 ## Different types
 
-As long as we plug data of the same type into sockets of the right type, everything works fine. What happens when we connect two sockets of different types? Most of the time this will work, even though it might not do what you think it will. The only time it doesn't work is when you try to connect a shader socket with any other non-shader socket. (If you want to convert a shader to a color you have to use the `Shader to RGB` node which only works in EEVEE). In that case the connection will be made red, and the shader won't compile. You can see the different possibilities here:
+As long as we plug data of the same type into sockets of the right type, everything works fine. What happens when we connect two sockets of different types? Most of the time this will work, even though it might not do what you think it will. The only time it doesn't work is when you try to connect a shader socket with any other non-shader socket. In that case the connection will be made red, and the shader won't compile. If you want to convert a shader to a color you have to use the `Shader to RGB` node which only works in EEVEE. You can see the different possibilities here:
 
 ![Socket connections](images/sockets2.png)
 
@@ -23,7 +23,7 @@ So what happens when it does work? The answer depends on the types of the socket
 
 The data stored in a color socket is made up of three values stored together as `(r, g, b)`. These are the red, green, and blue values of the color. Here are the possibilities for implicit conversion:
 
-- Color -> Shader. The color output gets treated as an emission shader with a strength one.
+- Color -> Shader. The color output gets treated as an emission shader with strength one.
 - Color -> Vector. The `(r, g, b)` gets sent to `(x, y, z)`.
 - Color -> Value. The returned value is the luminance: `0.2126729*r + 0.7151522*g + 0.0721750*b`. This is the same as the `Color to BW` node, and leaves grayscale values unchanged.
 
@@ -37,7 +37,7 @@ The data stored in a vector socket is the same as the data stored in a color soc
 ### Value socket
 
 This just stores one value, hence the name. 
-- Value -> Shader. The output gets treated as an emission shader with color `(1.0, 1.0, 1.0)` and strength the value.
+- Value -> Shader. The output gets treated as an emission shader with color `(1.0, 1.0, 1.0)` (white) and strength the value.
 - Value -> Color. The red, green, and blue channels are set to the value.
 - Value -> Vector. The x, y and z components are set to the value.
 
@@ -47,7 +47,7 @@ Converting between Color and Vector does nothing. Converting from Value to Vecto
 
 ## Separate and Combine
 
-If you don't want to lose information because of implicit conversions, you can use the `Separate XYZ` node and the `Separate RGB` node to extract the individual components.
+If you don't want to lose information because of implicit conversions, you can use the `Separate XYZ` node and the `Separate RGB` node to extract the individual components. If you then want to combine them later in the node tree you can use the `Combine XYZ` and `Combine RGB` nodes.
 
 ---
 

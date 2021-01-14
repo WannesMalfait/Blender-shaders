@@ -4,7 +4,7 @@ We will start from this node tree:
 
 ![Starting node group](images/mn1.png)
 
-We will go into more detail on coordinates in a later chapter, for now all you need to know is that the object coordinates are centered at the object origin, and go from -1 to 1 in all three axes in this case. The separate xyz allows us to only look at one axis at a time, in this case the x-axis.
+We will go into more detail on coordinates in a later chapter, for now all you need to know is that the object coordinates are centered at the object origin, and go from -1 to 1 in all three axes in this case. The separate xyz allows us to only look at one axis at a time, in this case the x-axis. The viewer node is just a renamed emission node.
 
 ## Thinking in terms of ranges
 
