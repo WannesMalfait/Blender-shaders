@@ -100,7 +100,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Blender shaders</a></li><li class="chapter-item expanded affix "><a href="shaders.html">What is a shader</a></li><li class="chapter-item expanded "><a href="mnode/index.html"><strong aria-hidden="true">1.</strong> The math node</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="mnode/sockets.html"><strong aria-hidden="true">1.1.</strong> Sockets</a></li><li class="chapter-item expanded "><a href="mnode/basic_ops.html"><strong aria-hidden="true">1.2.</strong> Basic operations</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.3.</strong> Coordinates</div></li></ol></li><li class="chapter-item expanded "><a href="resources.html">Resources</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Blender shaders</a></li><li class="chapter-item expanded affix "><a href="shaders.html">What is a shader</a></li><li class="chapter-item expanded "><a href="mnode/index.html"><strong aria-hidden="true">1.</strong> The math node</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="mnode/sockets.html"><strong aria-hidden="true">1.1.</strong> Sockets</a></li><li class="chapter-item expanded "><a href="mnode/basic_ops.html"><strong aria-hidden="true">1.2.</strong> Basic operations</a></li><li class="chapter-item expanded "><a href="mnode/shape.html"><strong aria-hidden="true">1.3.</strong> Shape</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.4.</strong> Repetition</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Coordinates</div></li></ol></li><li class="chapter-item expanded "><a href="resources.html">Resources</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -178,8 +178,7 @@ everything, and will therefore not be able to cover everything. The shaders from
 <p>The book focuses on creating procedural shaders in blender, i.e. it is <strong>not</strong> a tutorial for blender itself. The early chapters are aimed at complete beginners, and serve as a replacement for my series on youtube: <a href="https://youtube.com/playlist?list=PLHwudW8KFVowaZMvH7DGsxSaHE_qPvX_k">Math in the node editor</a>.
 Here we will look at how we can manipulate coordinates to create all sorts of cool effects. Later chapters will be more advanced and cover more interesting topics such as vector displacement. There will also be a small chapter on python scripting. Each chapter will have examples where we create shaders using the things we learned.</p>
 <h2><a class="header" href="#acknowledgement" id="acknowledgement">Acknowledgement</a></h2>
-<p>This book was written using <a href="https://github.com/rust-lang/mdBook">mdbook</a>. 
-It would not have been possible without the loving community of Rustaceans.</p>
+<p>This book was written using <a href="https://github.com/rust-lang/mdBook">mdbook</a>. It would not have been possible without the loving community of Rustaceans. The graphs are from the fantastic website <a href="https://graphtoy.com/">grapthoy</a>, by Inigo Quilez.</p>
 <h1><a class="header" href="#what-is-a-shader" id="what-is-a-shader">What is a shader</a></h1>
 <p>Although there are varying definitions for what a shader is, a simple way to think about them is as programs that are run on a Graphics Processing Unit (GPU). A GPU, unlike a Central Processing Unit (CPU), is built to do a single operation many times in parallel very quickly. These operations can range from things like adding two numbers to calculating the sine of a value. This makes a GPU a very powerful tool when dealing with images, because images are made up of a large number of pixels that would take a long time to edit one at a time. The shaders that we will be looking at in this book are all so-called <em>fragment shaders</em>. Other types of shaders are vertex shaders, compute shaders and geometry shaders.</p>
 <h2><a class="header" href="#fragment-shaders" id="fragment-shaders">Fragment shaders</a></h2>
@@ -202,7 +201,7 @@ It would not have been possible without the loving community of Rustaceans.</p>
 <li>Values are indicated with greyish sockets</li>
 <li>Colors are indicated with yellowish sockets</li>
 <li>Vectors are indicated with blue/purplish sockets</li>
-<li>Shaders used to be indicated with green sockets and are now indicated with red sockets.</li>
+<li>Shaders are indicated with greenish sockets</li>
 </ul>
 <p>You can see the different types of sockets here:</p>
 <p><img src="mnode/images/sockets.png" alt="Socket types" /></p>
@@ -319,42 +318,42 @@ float ShaderManager::linear_rgb_to_gray(float3 c)
 <h1><a class="header" href="#the-basics-of-the-math-node" id="the-basics-of-the-math-node">The basics of the math node</a></h1>
 <p>We will start from this node tree:</p>
 <p><img src="mnode/images/mn1.png" alt="Starting node group" /></p>
-<p>We will go into more detail on coordinates in a later chapter, for now all you need to know is that the object coordinates are centered at the object origin, and go from -1 to 1 in all three axes in this case. The separate xyz allows us to only look at one axis at a time, in this case the x-axis. The viewer node is just a renamed emission node.</p>
+<p>We will go into more detail on coordinates in a later chapter, for now all you need to know is that the object coordinates are centered at the object origin, and go from -1 to 1 in all three axes in this case. The <code>Separate XYZ</code> node allows us to only look at one axis at a time, in this case the x-axis. The viewer node is just a renamed <code>Emission Shader</code> node.</p>
 <h2><a class="header" href="#thinking-in-terms-of-ranges" id="thinking-in-terms-of-ranges">Thinking in terms of ranges</a></h2>
-<p>The current output shows black in the left half and grey values going to white in the right half. This is one way to describe the output, but from this it is not so clear what the actual output values are. A better way to think about the output image is as a <em>linear gradient from -1 to 1</em>. The <em>range</em> of the gradient is [-1, 1] in this case. What this means is that the pixel value as you move from one side to the other changes from -1 to 1. The change here is along the x axis and goes from left to right (from lower values to bigger values). Because values below 0 are displayed as black, the left half of the image is black. If the gradient was along the y-axis then it would be going from the bottom to the top. </p>
+<p>The current output shows black in the left half and grey values going to white in the right half. This is one way to describe the output, but from this it is not so clear what the actual output values are. A better way to think about the output image is as a <em>linear gradient from -1 to 1</em>. The <em>range</em> of the gradient is <code>[-1, 1]</code> in this case. What this means is that the pixel value as you move from one side to the other changes from -1 to 1. The change here is along the x axis and goes from left to right (from lower values to bigger values). Because values below 0 are displayed as black, the left half of the image is black. If the gradient was along the y-axis then it would be going from the bottom to the top. </p>
 <p>In addition to the range of values, we can also talk about the <em>shape</em> of the gradient. In this case the shape is linear, because when we plot the value of each pixel as we move from left to right the plotted shape is a line:</p>
 <p><img src="mnode/images/lin_grad.png" alt="Linear gradient" /></p>
 <p>The most common shape is a linear gradient. </p>
 <h2><a class="header" href="#the-math-node" id="the-math-node">The math node</a></h2>
-<p>Now that we have learned about gradients and ranges, it is time to manipulate them. In this section we will look at the most basic operations: add, subtract, multiply and divide. What happens when we add a math node in between the separate xyz node and the viewer node? The values that go into the viewer node will now first pass through the math node. The math node will apply an operation to the values that are passed in and return a new value. By default the math node is set to add, and both values set to 0.5. The add, subtract, multiply and divide modes only affect the range and not the shape.</p>
+<p>Now that we have learned about gradients and ranges, it is time to manipulate them. In this section we will look at the most basic operations: <code>Add</code>, <code>Subtract</code>, <code>Multiply</code> and <code>Divide</code>. What happens when we add a <code>Math</code> node in between the <code>Separate XYZ</code> node and the viewer node? The values that go into the viewer node will now first pass through the <code>Math</code> node. The <code>Math</code> node will apply an operation to the values that are passed in, and return a new value. By default the <code>Math</code> node is set to <code>Add</code>, and both values set to 0.5. The <code>Add</code>, <code>Subtract</code>, <code>Multiply</code> and <code>Divide</code> modes only affect the range and not the shape.</p>
 <p><img src="mnode/images/mn2.png" alt="Node setup" /></p>
 <h3><a class="header" href="#add-and-subtract" id="add-and-subtract">Add and Subtract</a></h3>
-<p>Currently the range is [-1, 1]. When it passes through the math node 0.5 is added to every value in the range. Luckily we don't need to think about what happens to every value in the range. We only need to look at the the two endpoints, i.e -1 and 1. Because we add 0.5 to everything, the range changes from [-1, 1] to [-0.5, 1.5]. You can think of this as moving the line 0.5 units upwards or moving the gradient 0.5 units to the left, whichever is more intuitive for you. </p>
-<p>If we now change the value of the add node, the range will move left or right. Increasing the value of the second input means we make the values in the range bigger, causing them to move to the right on the number line. This means, however, that the darker values will move to the left in the range, and because of that we perceive it as moving the image to the left. If we instead add negative values the result is the complete opposite.</p>
-<p>A good way to see this, is to think about the middle value or center of the range. The center of a range represents its position. We can calculate the center of the range [a, b] as
+<p>Currently the range is <code>[-1, 1]</code> . When it passes through the math node 0.5 is added to every value in the range. Luckily we don't need to think about what happens to every value in the range. We only need to look at the the two endpoints, i.e -1 and 1. Because we add 0.5 to everything, the range changes from <code>[-1, 1]</code> to <code>[-0.5, 1.5]</code> . You can think of this as moving the line 0.5 units upwards or moving the gradient 0.5 units to the left, whichever is more intuitive for you. </p>
+<p>If we now change the value of the <code>Add</code> node, the range will move left or right. Increasing the value of the second input means we make the values in the range bigger, causing them to move to the right on the number line. This means, however, that the darker values will move to the left in the range, and because of that we perceive it as moving the image to the left. If we instead add negative values the result is the complete opposite.</p>
+<p>A good way to see this, is to think about the middle value or center of the range. The center of a range represents its position. We can calculate the center of the range <code>[a, b]</code> as
 \[\frac{a+b}{2}\]
-If the range is [-1, 1] then the center is at 0. When we add 0.5 the new range is [-0.5, 1.5] and the center is now at 0.5. The old center, 0, is no longer in the center of the range but has moved to the left in the range, i.e. the old center is to the left of the new center. We will therefore see it as moving to the left. If we subtract values by changing the mode to subtract or by adding negative values, the range will move to the left and the old center will move to the right of the new center.</p>
-<p>In conclusion, the add mode allows us to reposition a range. This is sometimes referred to as translation. If we want to move things to the left we add positive numbers, and if we want to move things to the right we add negative numbers.</p>
+If the range is <code>[-1, 1]</code> then the center is at 0. When we add 0.5 the new range is <code>[-0.5, 1.5]</code> and the center is now at 0.5. The old center, 0, is no longer in the center of the range but has moved to the left in the range, i.e. the old center is to the left of the new center. We will therefore see it as moving to the left. If we subtract values by changing the mode to <code>Subtract</code> or by adding negative values, the range will move to the left and the old center will move to the right of the new center.</p>
+<p>In conclusion, the <code>Add</code> mode allows us to reposition a range. This is sometimes referred to as translation. If we want to move things to the left we add positive numbers, and if we want to move things to the right we add negative numbers.</p>
 <h3><a class="header" href="#multiply-and-divide" id="multiply-and-divide">Multiply and Divide</a></h3>
-<p>We have now seen how to position a range. If this was the only thing we could do with ranges we would be very limited. Luckily the multiply mode allows us to scale the range. To see how this works let's look at an example once again.</p>
+<p>We have now seen how to position a range. If this was the only thing we could do with ranges we would be very limited. Luckily the <code>Multiply</code> mode allows us to scale the range. To see how this works let's look at an example once again.</p>
 <p><img src="mnode/images/mn3.png" alt="Multiply node" /></p>
-<p>The input range is [-1, 1], and we multiply everything by 0.5. This means that the new range is now [-0.5, 0.5]. The center of the old range was 0, and that of the new range is still 0. Therefore the position has not changed. What has changed however is the (signed) length of the range, which we can calculate as follows: 
-\[b-a\]
-The length of the range [-1, 1] is 2, while the length of the new range, [-0.5, 0.5], is 1. This is exactly \(0.5*2\), so the length of the old range multiplied by the value in the multiply socket. The length of the range has decreased, which we perceive visually as zooming in. If we were to multiply by a value greater than 1, say 2, then the length would increase giving the effect of zooming out. In addition to increasing or decreasing the length of the range, we can also think of multiplying as darkening or brightening an image. If we multiply by a value less than 1, the values get darker. If we multiply by a value greater than 1 the values get brighter.</p>
-<p>What happens if you multiply by a negative number? Let's say we multiply the range [-1, 1] with -1, then the new range is [1, -1]. We have flipped the range! This range has a signed length of -2, this means that instead of increasing from left to right, it now goes from right to left. Visually we perceive this as mirroring the range.</p>
+<p>The input range is <code>[-1, 1]</code> , and we multiply everything by 0.5. This means that the new range is now <code>[-0.5, 0.5]</code> . The center of the old range was 0, and that of the new range is still 0. Therefore the position has not changed. What has changed however is the (signed) length of the range, which we can calculate as follows: 
+\[ b-a \]
+The length of the range <code>[-1, 1]</code> is 2, while the length of the new range, <code>[-0.5, 0.5]</code> , is 1. This is exactly \(0.5*2\), so the length of the old range multiplied by the value in the we gave as input. The length of the range has decreased, which we perceive visually as zooming in. If we were to multiply by a value greater than 1, say 2, then the length would increase giving the effect of zooming out. In addition to increasing or decreasing the length of the range, we can also think of multiplying as darkening or brightening an image. If we multiply by a value less than 1, the values get darker. If we multiply by a value greater than 1 the values get brighter.</p>
+<p>What happens if you multiply by a negative number? Let's say we multiply the range <code>[-1, 1]</code> with -1, then the new range is <code>[1, -1]</code> . We have flipped the range! This range has a signed length of -2, this means that instead of increasing from left to right, it now goes from right to left. Visually we perceive this as mirroring the range.</p>
 <h2><a class="header" href="#summary-1" id="summary-1">Summary</a></h2>
-<p>To move, translate or reposition a range we can use the &quot;add&quot; or &quot;subtract&quot; mode. To resize, scale or flip a range we can use the &quot;multiply&quot; or &quot;divide&quot; mode.</p>
+<p>To move, translate or reposition a range we can use the <code>Add</code> or <code>Subtract</code> mode. To resize, scale or flip a range we can use the <code>Multiply</code> or <code>Divide</code> mode.</p>
 <hr />
 <h2><a class="header" href="#example-map-range-node-from-scratch" id="example-map-range-node-from-scratch">Example: map range node from scratch</a></h2>
-<p>To put our newly learned skills to the test we will recreate the map range node from scratch. The map range node is a very useful node that lets you go from one range to another, by specifying the endpoints. If we wanted to convert the range [-1, 1] to [0.5, 2] we would use these settings:</p>
+<p>To put our newly learned skills to the test we will recreate the map range node from scratch. The map range node is a very useful node that lets you go from one range to another, by specifying the endpoints. If we wanted to convert the range <code>[-1, 1]</code> to <code>[0.5, 2]</code> we would use these settings:</p>
 <p><img src="mnode/images/map_range.png" alt="map range node" /></p>
 <h3><a class="header" href="#steps-needed" id="steps-needed">Steps needed</a></h3>
-<p>To convert from one range [a, b] to the other [c, d] we will use the following steps:</p>
+<p>To convert from one range <code>[a, b]</code> to the other <code>[c, d]</code> we will use the following steps:</p>
 <ol>
-<li>Subtract <code>a</code> from the range. This will convert it to the range [0, b-a].</li>
-<li>Make the input range have length 1 by dividing by its length \((b-a)\). The new range is now [0, 1]. In many cases when working with ranges, you want to work with a range from 0 to 1, or [-1, 1]. The reasons for this will become clear when we start changing the shape.</li>
-<li>Resize the range to the length of the output range by multiplying by \(d-c\). The range is now [0, d-c]. It already has the correct length.</li>
-<li>We position the range so that the endpoints match, by adding <code>c</code>. The new range is now [c, d]. This is the result we wanted.</li>
+<li>Subtract <code>a</code> from the range. This will convert it to the range <code>[0, b-a]</code> .</li>
+<li>Make the input range have length 1 by dividing by its length \((b-a)\). The new range is now <code>[0, 1]</code> . In many cases when working with ranges, you want to work with a range from 0 to 1, or <code>[-1, 1]</code> . The reasons for this will become clear when we start changing the shape.</li>
+<li>Resize the range to the length of the output range by multiplying by \(d-c\). The range is now <code>[0, d-c]</code> . It already has the correct length.</li>
+<li>We position the range so that the endpoints match, by adding <code>c</code>. The new range is now <code>[c, d]</code> . This is the result we wanted.</li>
 </ol>
 <p>For the more mathematically inclined, the full formula looks like this:
 \[
@@ -366,19 +365,87 @@ where \(x\) is the input range.</p>
 <p><img src="mnode/images/map_range2.png" alt="map range 2" /></p>
 <p>We will now follow the steps from above but using math nodes. If I refer to socket names, they are the same as in the picture. Notice how the computations with ranges we described earlier are easily translated to operations with the math node.</p>
 <ol>
-<li>Change the mode of the math node to &quot;Subtract&quot;, and connect the <code>a</code> socket with the second input of the subtract node.</li>
-<li>Add a divide node between the subtract node and the group output. Copy the subtract node (<code>Shift + D</code>), and connect the <code>a</code> socket to the second input and the <code>b</code> socket to the first input. (This node will thus compute \(b-a\)). Then plug the result of this subtract node into the second input of the divide node.</li>
+<li>Change the mode of the math node to &quot;Subtract&quot;, and connect the <code>A</code> socket with the second input of the <code>Subtract</code> node.</li>
+<li>Add a <code>Divide</code> node between the <code>Subtract</code> node and the group output. Copy the <code>Subtract</code> node (<code>Shift + D</code>), and connect the <code>B</code> socket to the second input and the <code>A</code> socket to the first input. (This node will thus compute B - A. Then plug the result of this <code>Subtract</code> node into the second input of the <code>Divide</code> node.</li>
 </ol>
 <p><img src="mnode/images/map_range3.png" alt="map range 3" /></p>
 <ol start="3">
-<li>Add a multiply node after the divide node, and a subtract node below the other subtract nodes. Plug the <code>c</code> socket into the second input of the subtract node and the <code>d</code> socket into the first input. Then plug the result of that into the second input of the multiply node.</li>
-<li>Now just add an add node after the multiply node and plug the <code>c</code> socket into the second input.</li>
+<li>Add a <code>Multiply</code> node after the <code>Divide</code> node, and a <code>Subtract</code> node below the other <code>Subtract</code> nodes. Plug the <code>C</code> socket into the second input of the <code>Subtract</code> node and the <code>D</code> socket into the first input. Then plug the result of that into the second input of the <code>Multiply</code> node.</li>
+<li>Now just add an <code>Add</code> node after the <code>Multiply</code> node and plug the <code>C</code> socket into the second input.</li>
 </ol>
+<p>It is also be possible to use the <code>Multiply Add</code> node to combine the last two steps into one node. The way we did it makes the correspondence clearer between the steps we set at the beginning, and is thus preferable for educational purposes.</p>
 <p><img src="mnode/images/map_range4.png" alt="Final setup" /></p>
 <h4><a class="header" href="#final-example" id="final-example">Final example</a></h4>
 <p>Here is a simple example where we used the map range node group to change the range of a noise texture:</p>
 <p><img src="mnode/images/map_range5.png" alt="map range example" /></p>
-<h1><a class="header" href="#resources" id="resources">Resources</a></h1>
+<h1><a class="header" href="#shape" id="shape">Shape</a></h1>
+<p>We have just learned how to transform a range using the <code>Math</code> node. Now it is time to also change the shape, for which we will be using the <code>Math</code> node as well. The functions that we will be looking at are <code>Power</code>, <code>Sine</code>, <code>Smoothstep</code> and <code>Smootherstep</code>.</p>
+<h2><a class="header" href="#power" id="power">Power</a></h2>
+<p>The <code>Power</code> mode of the math node, is a powerful tool that allows us to change the shape or interpolation of a gradient. The mathematical operation is \(a^b\), as is also shown in the tooltip. There are two ways to use this:</p>
+<ol>
+<li>We let <code>a</code> be constant, and plug the range into the <code>b</code> socket. This gives us an exponential function with base <code>a</code>. If we choose <code>a</code> to be 2, then we would get the function \(2^x\). The exponential function is not so useful when changing the shape, but comes up a lot in mathematical formulas. </li>
+<li>In the other case we make <code>b</code> constant and plug the range into the <code>a</code> socket. In this case we are raising the range to the <code>b</code>-th power. This is something that we will use a lot in the future. We will refer to it as the power function from now on.</li>
+</ol>
+<p>The two functions look like this:</p>
+<iframe src="https://graphtoy.com/?f1(x,t)=(sin(t)+1)*5&v1=false&f2(x,t)=pow(f1(x,t),x)&v2=true&f3(x,t)=pow(x,f1(x,t))&v3=true&f4(x,t)=&v4=false&f5(x,t)=&v5=false&f6(x,t)=&v6=false&grid=true&coords=-0.221702458210423,1.253803500548723,2.3859407407407427"
+name="Power and Exponential function" height = "700" style="border: none;display: block; margin: 2 auto; width: 100%"></iframe>
+<p>The constant value is animated through time between 0 and 10 by a sine wave, an incredibly useful function that we will cover soon. Feel free to experiment by changing the values of the functions.</p>
+<p>Here are some observations we can make from the graph</p>
+<ul>
+<li>The functions seem to flip at a certain threshold, to be exact at a value of 1.</li>
+<li>The power function is only shown on the right hand side (the positive x axis).</li>
+<li>The power function always passes through the points <code>(0,0)</code> and <code>(1,1)</code>, and is constantly rising (i.e. as you move from right to left the values increase). </li>
+<li>The exponential function always passes through <code>(0,1)</code>.</li>
+</ul>
+<p>The third property is the most important one. Another way to formulate it is as follows: &quot;If you plug a <code>[0, 1]</code> range in the power function, you get back a <code>[0, 1]</code> range, but with a different shape&quot;. This property is also true for the other functions that we will be looking at. If we look at the shape of the curve, we can see that it is not flat at the points <code>(0,0)</code>and <code>(1,1)</code>. This means that we might get sharp transitions when combining this function with others. The following three functions fix this problem.</p>
+<h2><a class="header" href="#sine-smooth-and-smoother" id="sine-smooth-and-smoother">Sine, Smooth and Smoother</a></h2>
+<p>We will limit ourselves to the range <code>[0, 1]</code> for these functions, as this makes things considerably easier. At the end of the section we will see how we can overcome this limitation.</p>
+<h3><a class="header" href="#derivatives" id="derivatives">Derivatives</a></h3>
+<p>To make a function that is flat at the edges, we first have to define what it means for a function to be flat. Intuitively a function can be considered flat at a point, if we can balance a book on the graph of the function. A more mathematical way would be to say that the function has a slope or derivative of zero at that point. Intuitively the slope says by how much a function is rising at that point. If the slope is negative, the function is decreasing, and if the slope is positive it is increasing. When the slope is 0, it is neither increasing nor decreasing and thus flat. The following image illustrates the different concepts we just talked about.</p>
+<p><img src="mnode/images/derivatives.png" alt="Derivatives illustration" /></p>
+<p>What follows is a bit more of a technical explanation, so feel free to skip over it and go straight to the <a href="mnode/shape.html#summary">summary</a>.</p>
+<h3><a class="header" href="#construction-of-the-functions" id="construction-of-the-functions">Construction of the functions</a></h3>
+<p>The simplest kinds of functions are the polynomials, they form the building blocks for more complex functions. Not only are they simple to write down, they can also be evaluated very quickly, making them ideal for computer graphics. Another useful property of polynomials is that, through \(n+1\) distinct points there is a unique polynomial of degree \(n\), a more general formulation of the well known property that two points determine a line. So what degree polynomial do we need to get a function that satisfies the properties we want? The properties are:</p>
+<ul>
+<li>Goes through <code>(0,0)</code> and <code>(1,1)</code></li>
+<li>It is flat at <code>(0,0)</code> and <code>(1,1)</code></li>
+</ul>
+<p>These are four conditions, meaning that we have a unique polynomial of degree 3 which satisfies these properties. This polynomial, commonly known as <code>Smoothstep</code>, looks like this
+<img src="mnode/images/smoothstep.png" alt="Smoothstep" />
+\[
+-2x^3+3x^2 = x\cdot x\cdot (3-2\cdot x)
+\]
+The right hand side is the one used in computer graphics, because it requires less computational steps to evaluate than the one on the left. Anyone who has had an introduction to calculus should be able to verify that this function does indeed meet the constrains. This function satisfies the properties we have described, but is not &quot;smooth&quot; enough in some cases. To fix this we use the so-called <code>Smootherstep</code>, which adds two extra conditions.</p>
+<ul>
+<li>Goes through <code>(0,0)</code> and <code>(1,1)</code></li>
+<li>It is flat at <code>(0,0)</code> and <code>(1,1)</code></li>
+<li>The second derivative (the derivative of the derivative) is flat at <code>(0,0)</code> and <code>(1,1)</code></li>
+</ul>
+<p>The new conditions ensure that the boundaries are very flat. Because we have 6 conditions, we now need a degree 5 polynomial.
+<img src="mnode/images/smootherstep.png" alt="Smootherstep" /> 
+\[
+6x^5-15x^4+10x^3 = x\cdot x\cdot x\cdot (x\cdot (x\cdot 6-15)+10)
+\]</p>
+<p>What if we don't want to use polynomials? In that case, good candidates are the trigonometric functions like <code>Sine</code>, <code>Cosine</code> and <code>Tangent</code>. The problem here is that they are more expensive to evaluate, and less suited for the task. Another reason that we don't want to use them here, is that they are approximated very well by polynomials. In fact any continuous function on a closed interval can be approximated as closely as desired by polynomials, this result is known as the Stone-Weierstrass theorem. This means that we are finding more complex polynomials to solve the same problems. If we do want to use <code>Sine</code>, we have to do some transforms on ranges to get it to line up. We will go into more detail on the <code>Sine</code> function when we talk about repetitions.</p>
+<p><img src="mnode/images/sin.png" alt="Sine wave" /></p>
+<p>The value of <code>Sine</code>, goes from -1 to 1 as the input goes from \(-\pi/2\) to \(\pi/2\). Luckily for us it's already flat at the edges. Our goal is to make it go from 0 to 1 as the input goes from 0 to 1. To do this, we can use similar steps to the ones we used for the <code>Map Range</code> node. To go from <code>[-1,1]</code> to <code>[0,1]</code>, we simply add 1 and divide by 2. For the input we multiply \(x\) by \(\pi\) and add \(-\pi/2\). The final function looks like this:
+\[
+\frac{\sin(\pi x - \pi /2)+1}{2}
+\]</p>
+<h2><a class="header" href="#different-ranges" id="different-ranges">Different ranges</a></h2>
+<p>To make the functions work on ranges other than <code>[0,1]</code> we can use the steps we used to create the <code>Map Range</code> node from scratch, with one new step in the middle. Like before we have an input and an output range, e.g. <code>[a,b]</code> and <code>[c,d]</code></p>
+<ul>
+<li>First remap the range to <code>[0,1]</code> by subtracting <code>a</code> and dividing by <code>b</code> - <code>a</code>.</li>
+<li>At this point it is possible that the values exceed the <code>[0,1]</code> range, if the actual input exceeded the <code>[a,b]</code> range. To fix this we <code>Clamp</code> the input between 0 and 1, i.e. values less than 0 go to 0, and values greater than 1 go to 1. Now we apply the function to the clamped range.</li>
+<li>We can now remap the range (with a changed shape) from <code>[0,1]</code> to <code>[c,d]</code>, by multiplying by <code>d</code> - <code>c</code> and adding <code>c</code>.</li>
+</ul>
+<p>The updated node group looks like this:</p>
+<p><img src="mnode/images/map_range_smooth.png" alt="Smoothstep version of map range" /></p>
+<p>Making the <code>Smoothstep</code> node group is left as an exercise. This now has basically the same functionality as the actual <code>Map Range</code> node.</p>
+<h2><a class="header" href="#summary-2" id="summary-2">Summary</a></h2>
+<p>Here is a plot of all the functions we looked at.</p>
+<iframe src="https://graphtoy.com/?f1(x,t)=(sin(t)+1)*5&v1=false&f2(x,t)=x&v2=false&f3(x,t)=pow(x,f1(x,t))&v3=true&f4(x,t)=x*x*(3-2*x)&v4=true&f5(x,t)=(sin(x*PI-PI/2)+1)/2&v5=true&f6(x,t)=x*x*x*(x*(x*6-15)+10)&v6=true&grid=true&coords=0.5,0.5,0.6666666666666666"
+name="Different shapes" height = "700" style="border: none; display: block; margin: 2 auto; width: 100%"> </iframe><h1><a class="header" href="#resources" id="resources">Resources</a></h1>
 <p>If you are interested in learning more about shaders, these resources might be what you're looking for.</p>
 <h2><a class="header" href="#blender-specific-resources" id="blender-specific-resources">Blender specific resources</a></h2>
 <ul>
