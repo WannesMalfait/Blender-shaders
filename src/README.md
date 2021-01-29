@@ -8,5 +8,4 @@ Here we will look at how we can manipulate coordinates to create all sorts of co
 
 
 ## Acknowledgement
-This book was written using [mdbook](https://github.com/rust-lang/mdBook). 
-It would not have been possible without the loving community of Rustaceans.
+This book was written using [mdbook](https://github.com/rust-lang/mdBook). It would not have been possible without the loving community of Rustaceans. The graphs are from the fantastic website [grapthoy](https://graphtoy.com/), by Inigo Quilez.

@@ -5,6 +5,8 @@
 - [The math node](mnode/README.md)
     - [Sockets](mnode/sockets.md)
     - [Basic operations](mnode/basic_ops.md)
+    - [Shape](mnode/shape.md)
+    - [Repetition]()
     - [Coordinates]()
 
 [Resources](resources.md)

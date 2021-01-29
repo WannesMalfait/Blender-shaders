@@ -41,7 +41,7 @@ We have now seen how to position a range. If this was the only thing we could do
 ![Multiply node](images/mn3.png)
 
 The input range is `[-1, 1]` , and we multiply everything by 0.5. This means that the new range is now `[-0.5, 0.5]` . The center of the old range was 0, and that of the new range is still 0. Therefore the position has not changed. What has changed however is the (signed) length of the range, which we can calculate as follows: 
-\\[b-a\\]
+\\[ b-a \\]
 The length of the range `[-1, 1]` is 2, while the length of the new range, `[-0.5, 0.5]` , is 1. This is exactly \\(0.5*2\\), so the length of the old range multiplied by the value in the we gave as input. The length of the range has decreased, which we perceive visually as zooming in. If we were to multiply by a value greater than 1, say 2, then the length would increase giving the effect of zooming out. In addition to increasing or decreasing the length of the range, we can also think of multiplying as darkening or brightening an image. If we multiply by a value less than 1, the values get darker. If we multiply by a value greater than 1 the values get brighter.
 
 What happens if you multiply by a negative number? Let's say we multiply the range `[-1, 1]` with -1, then the new range is `[1, -1]` . We have flipped the range! This range has a signed length of -2, this means that instead of increasing from left to right, it now goes from right to left. Visually we perceive this as mirroring the range.
@@ -85,6 +85,8 @@ We will now follow the steps from above but using math nodes. If I refer to sock
 
 3. Add a `Multiply` node after the `Divide` node, and a `Subtract` node below the other `Subtract` nodes. Plug the `C` socket into the second input of the `Subtract` node and the `D` socket into the first input. Then plug the result of that into the second input of the `Multiply` node.
 4. Now just add an `Add` node after the `Multiply` node and plug the `C` socket into the second input.
+
+It is also be possible to use the `Multiply Add` node to combine the last two steps into one node. The way we did it makes the correspondence clearer between the steps we set at the beginning, and is thus preferable for educational purposes.
 
 ![Final setup](images/map_range4.png)
 
