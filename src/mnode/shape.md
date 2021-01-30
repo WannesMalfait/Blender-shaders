@@ -4,9 +4,9 @@ We have just learned how to transform a range using the `Math` node. Now it is t
 
 ## Power
 
-The `Power` mode of the math node, is a powerful tool that allows us to change the shape or interpolation of a gradient. The mathematical operation is \\(a^b\\), as is also shown in the tooltip. There are two ways to use this:
+The `Power` mode of the math node is a powerful tool that allows us to change the shape or interpolation of a gradient. The mathematical operation is \\(a^b\\), as is also shown in the tooltip. There are two ways to use this:
 
-1. We let `a` be constant, and plug the range into the `b` socket. This gives us an exponential function with base `a`. If we choose `a` to be 2, then we would get the function \\(2^x\\). The exponential function is not so useful when changing the shape, but comes up a lot in mathematical formulas. 
+1. We let `a` be constant, and plug the range into the `b` socket. This gives us an exponential function with base `a`. If we chose `a` to be 2, for example, then we would get the function \\(2^x\\). The exponential function is not so useful when changing the shape, but comes up a lot in mathematical formulas. 
 2. In the other case we make `b` constant and plug the range into the `a` socket. In this case we are raising the range to the `b`-th power. This is something that we will use a lot in the future. We will refer to it as the power function from now on.
 
 The two functions look like this:
@@ -35,7 +35,7 @@ To make a function that is flat at the edges, we first have to define what it me
 
 What follows is a bit more of a technical explanation, so feel free to skip over it and go straight to the [summary](#summary).
 ### Construction of the functions
-The simplest kinds of functions are the polynomials, they form the building blocks for more complex functions. Not only are they simple to write down, they can also be evaluated very quickly, making them ideal for computer graphics. Another useful property of polynomials is that, through \\(n+1\\) distinct points there is a unique polynomial of degree \\(n\\), a more general formulation of the well known property that two points determine a line. So what degree polynomial do we need to get a function that satisfies the properties we want? The properties are:
+The simplest kinds of functions are the polynomials, they form the building blocks for more complex functions. Not only are they simple to write down, they can also be evaluated very quickly, making them ideal for computer graphics. Another useful property of polynomials is that through \\(n+1\\) distinct points, there is a unique polynomial of degree \\(n\\), a more general formulation of the well known property that two points determine a line. So what degree polynomial do we need to get a function that satisfies the properties we want? The properties are:
 
 - Goes through `(0,0)` and `(1,1)`
 - It is flat at `(0,0)` and `(1,1)`
@@ -45,7 +45,7 @@ These are four conditions, meaning that we have a unique polynomial of degree 3 
 \\[
    -2x^3+3x^2 = x\cdot x\cdot (3-2\cdot x)
 \\]
-The right hand side is the one used in computer graphics, because it requires less computational steps to evaluate than the one on the left. Anyone who has had an introduction to calculus should be able to verify that this function does indeed meet the constrains. This function satisfies the properties we have described, but is not "smooth" enough in some cases. To fix this we use the so-called `Smootherstep`, which adds two extra conditions.
+The right hand side of the equation is the one used in computer graphics, because it requires less computational steps to evaluate than the one on the left. Anyone who has had an introduction to calculus should be able to verify that this function does indeed meet the constraints. This function satisfies the properties we have described, but is not "smooth" enough in some cases. To fix this we use the so-called `Smootherstep`, which adds two extra conditions.
 
 - Goes through `(0,0)` and `(1,1)`
 - It is flat at `(0,0)` and `(1,1)`
@@ -57,7 +57,7 @@ The new conditions ensure that the boundaries are very flat. Because we have 6 c
     6x^5-15x^4+10x^3 = x\cdot x\cdot x\cdot (x\cdot (x\cdot 6-15)+10)
 \\]
 
-What if we don't want to use polynomials? In that case, good candidates are the trigonometric functions like `Sine`, `Cosine` and `Tangent`. The problem here is that they are more expensive to evaluate, and less suited for the task. Another reason that we don't want to use them here, is that they are approximated very well by polynomials. In fact any continuous function on a closed interval can be approximated as closely as desired by polynomials, this result is known as the Stone-Weierstrass theorem. This means that we are finding more complex polynomials to solve the same problems. If we do want to use `Sine`, we have to do some transforms on ranges to get it to line up. We will go into more detail on the `Sine` function when we talk about repetitions.
+What if we don't want to use polynomials? In that case, good candidates are the trigonometric functions like `Sine`, `Cosine` and `Tangent`. The problem here is that they are more expensive to evaluate, and less suited for the task. Another reason, is that they are approximated very well by polynomials. In fact any continuous function on a closed interval can be approximated as closely as desired by polynomials. This result is known as the Stone-Weierstrass theorem. This means that we are finding more complex polynomials to solve the same problems. If we do want to use `Sine`, we have to do some transforms on ranges to get it to line up. We will go into more detail on the `Sine` function when we talk about repetitions.
 
 ![Sine wave](images/sin.png)
 
@@ -68,7 +68,7 @@ The value of `Sine`, goes from -1 to 1 as the input goes from \\(-\pi/2\\) to \\
 
 ## Different ranges
 
-To make the functions work on ranges other than `[0,1]` we can use the steps we used to create the `Map Range` node from scratch, with one new step in the middle. Like before we have an input and an output range, e.g. `[a,b]` and `[c,d]`
+To make the functions work on ranges other than `[0,1]` we can use the steps we used to create the `Map Range` node from scratch, with one new step in the middle. Like before, we have an input and an output range, e.g. `[a,b]` and `[c,d]`.
 
 - First remap the range to `[0,1]` by subtracting `a` and dividing by `b` - `a`.
 - At this point it is possible that the values exceed the `[0,1]` range, if the actual input exceeded the `[a,b]` range. To fix this we `Clamp` the input between 0 and 1, i.e. values less than 0 go to 0, and values greater than 1 go to 1. Now we apply the function to the clamped range.
