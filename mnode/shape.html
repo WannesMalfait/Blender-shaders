@@ -173,9 +173,9 @@
                         <h1><a class="header" href="#shape" id="shape">Shape</a></h1>
 <p>We have just learned how to transform a range using the <code>Math</code> node. Now it is time to also change the shape, for which we will be using the <code>Math</code> node as well. The functions that we will be looking at are <code>Power</code>, <code>Sine</code>, <code>Smoothstep</code> and <code>Smootherstep</code>.</p>
 <h2><a class="header" href="#power" id="power">Power</a></h2>
-<p>The <code>Power</code> mode of the math node, is a powerful tool that allows us to change the shape or interpolation of a gradient. The mathematical operation is \(a^b\), as is also shown in the tooltip. There are two ways to use this:</p>
+<p>The <code>Power</code> mode of the math node is a powerful tool that allows us to change the shape or interpolation of a gradient. The mathematical operation is \(a^b\), as is also shown in the tooltip. There are two ways to use this:</p>
 <ol>
-<li>We let <code>a</code> be constant, and plug the range into the <code>b</code> socket. This gives us an exponential function with base <code>a</code>. If we choose <code>a</code> to be 2, then we would get the function \(2^x\). The exponential function is not so useful when changing the shape, but comes up a lot in mathematical formulas. </li>
+<li>We let <code>a</code> be constant, and plug the range into the <code>b</code> socket. This gives us an exponential function with base <code>a</code>. If we chose <code>a</code> to be 2, for example, then we would get the function \(2^x\). The exponential function is not so useful when changing the shape, but comes up a lot in mathematical formulas. </li>
 <li>In the other case we make <code>b</code> constant and plug the range into the <code>a</code> socket. In this case we are raising the range to the <code>b</code>-th power. This is something that we will use a lot in the future. We will refer to it as the power function from now on.</li>
 </ol>
 <p>The two functions look like this:</p>
@@ -197,7 +197,7 @@ name="Power and Exponential function" height = "700" style="border: none;display
 <p><img src="images/derivatives.png" alt="Derivatives illustration" /></p>
 <p>What follows is a bit more of a technical explanation, so feel free to skip over it and go straight to the <a href="#summary">summary</a>.</p>
 <h3><a class="header" href="#construction-of-the-functions" id="construction-of-the-functions">Construction of the functions</a></h3>
-<p>The simplest kinds of functions are the polynomials, they form the building blocks for more complex functions. Not only are they simple to write down, they can also be evaluated very quickly, making them ideal for computer graphics. Another useful property of polynomials is that, through \(n+1\) distinct points there is a unique polynomial of degree \(n\), a more general formulation of the well known property that two points determine a line. So what degree polynomial do we need to get a function that satisfies the properties we want? The properties are:</p>
+<p>The simplest kinds of functions are the polynomials, they form the building blocks for more complex functions. Not only are they simple to write down, they can also be evaluated very quickly, making them ideal for computer graphics. Another useful property of polynomials is that through \(n+1\) distinct points, there is a unique polynomial of degree \(n\), a more general formulation of the well known property that two points determine a line. So what degree polynomial do we need to get a function that satisfies the properties we want? The properties are:</p>
 <ul>
 <li>Goes through <code>(0,0)</code> and <code>(1,1)</code></li>
 <li>It is flat at <code>(0,0)</code> and <code>(1,1)</code></li>
@@ -207,7 +207,7 @@ name="Power and Exponential function" height = "700" style="border: none;display
 \[
 -2x^3+3x^2 = x\cdot x\cdot (3-2\cdot x)
 \]
-The right hand side is the one used in computer graphics, because it requires less computational steps to evaluate than the one on the left. Anyone who has had an introduction to calculus should be able to verify that this function does indeed meet the constrains. This function satisfies the properties we have described, but is not &quot;smooth&quot; enough in some cases. To fix this we use the so-called <code>Smootherstep</code>, which adds two extra conditions.</p>
+The right hand side of the equation is the one used in computer graphics, because it requires less computational steps to evaluate than the one on the left. Anyone who has had an introduction to calculus should be able to verify that this function does indeed meet the constraints. This function satisfies the properties we have described, but is not &quot;smooth&quot; enough in some cases. To fix this we use the so-called <code>Smootherstep</code>, which adds two extra conditions.</p>
 <ul>
 <li>Goes through <code>(0,0)</code> and <code>(1,1)</code></li>
 <li>It is flat at <code>(0,0)</code> and <code>(1,1)</code></li>
@@ -218,14 +218,14 @@ The right hand side is the one used in computer graphics, because it requires le
 \[
 6x^5-15x^4+10x^3 = x\cdot x\cdot x\cdot (x\cdot (x\cdot 6-15)+10)
 \]</p>
-<p>What if we don't want to use polynomials? In that case, good candidates are the trigonometric functions like <code>Sine</code>, <code>Cosine</code> and <code>Tangent</code>. The problem here is that they are more expensive to evaluate, and less suited for the task. Another reason that we don't want to use them here, is that they are approximated very well by polynomials. In fact any continuous function on a closed interval can be approximated as closely as desired by polynomials, this result is known as the Stone-Weierstrass theorem. This means that we are finding more complex polynomials to solve the same problems. If we do want to use <code>Sine</code>, we have to do some transforms on ranges to get it to line up. We will go into more detail on the <code>Sine</code> function when we talk about repetitions.</p>
+<p>What if we don't want to use polynomials? In that case, good candidates are the trigonometric functions like <code>Sine</code>, <code>Cosine</code> and <code>Tangent</code>. The problem here is that they are more expensive to evaluate, and less suited for the task. Another reason, is that they are approximated very well by polynomials. In fact any continuous function on a closed interval can be approximated as closely as desired by polynomials. This result is known as the Stone-Weierstrass theorem. This means that we are finding more complex polynomials to solve the same problems. If we do want to use <code>Sine</code>, we have to do some transforms on ranges to get it to line up. We will go into more detail on the <code>Sine</code> function when we talk about repetitions.</p>
 <p><img src="images/sin.png" alt="Sine wave" /></p>
 <p>The value of <code>Sine</code>, goes from -1 to 1 as the input goes from \(-\pi/2\) to \(\pi/2\). Luckily for us it's already flat at the edges. Our goal is to make it go from 0 to 1 as the input goes from 0 to 1. To do this, we can use similar steps to the ones we used for the <code>Map Range</code> node. To go from <code>[-1,1]</code> to <code>[0,1]</code>, we simply add 1 and divide by 2. For the input we multiply \(x\) by \(\pi\) and add \(-\pi/2\). The final function looks like this:
 \[
 \frac{\sin(\pi x - \pi /2)+1}{2}
 \]</p>
 <h2><a class="header" href="#different-ranges" id="different-ranges">Different ranges</a></h2>
-<p>To make the functions work on ranges other than <code>[0,1]</code> we can use the steps we used to create the <code>Map Range</code> node from scratch, with one new step in the middle. Like before we have an input and an output range, e.g. <code>[a,b]</code> and <code>[c,d]</code></p>
+<p>To make the functions work on ranges other than <code>[0,1]</code> we can use the steps we used to create the <code>Map Range</code> node from scratch, with one new step in the middle. Like before, we have an input and an output range, e.g. <code>[a,b]</code> and <code>[c,d]</code>.</p>
 <ul>
 <li>First remap the range to <code>[0,1]</code> by subtracting <code>a</code> and dividing by <code>b</code> - <code>a</code>.</li>
 <li>At this point it is possible that the values exceed the <code>[0,1]</code> range, if the actual input exceeded the <code>[a,b]</code> range. To fix this we <code>Clamp</code> the input between 0 and 1, i.e. values less than 0 go to 0, and values greater than 1 go to 1. Now we apply the function to the clamped range.</li>
