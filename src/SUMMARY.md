@@ -7,7 +7,7 @@
     - [Sockets](mnode/sockets.md)
     - [Basic operations](mnode/basic_ops.md)
     - [Shape](mnode/shape.md)
-    - [Repetition](repetition.md)
-    - [Coordinates]()
+    - [Repetition](mnode/repetition.md)
+    - [More Dimensions]()
 
 [Resources](resources.md)
