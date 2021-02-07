@@ -3,10 +3,8 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title></title>
+        <title>Shaders and Textures - Blender Shaders</title>
         
-        
-        <base href="/Blender-shaders/">
         
 
 
@@ -100,7 +98,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Blender shaders</a></li><li class="chapter-item expanded affix "><a href="shaders.html">What is a shader</a></li><li class="chapter-item expanded affix "><a href="shaders_and_textures.html">Shaders and Textures</a></li><li class="chapter-item expanded "><a href="mnode/index.html"><strong aria-hidden="true">1.</strong> The math node</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="mnode/sockets.html"><strong aria-hidden="true">1.1.</strong> Sockets</a></li><li class="chapter-item expanded "><a href="mnode/basic_ops.html"><strong aria-hidden="true">1.2.</strong> Basic operations</a></li><li class="chapter-item expanded "><a href="mnode/shape.html"><strong aria-hidden="true">1.3.</strong> Shape</a></li><li class="chapter-item expanded "><a href="mnode/repetition.html"><strong aria-hidden="true">1.4.</strong> Repetition</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> More Dimensions</div></li></ol></li><li class="chapter-item expanded "><a href="resources.html">Resources</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Blender shaders</a></li><li class="chapter-item expanded affix "><a href="shaders.html">What is a shader</a></li><li class="chapter-item expanded affix "><a href="shaders_and_textures.html" class="active">Shaders and Textures</a></li><li class="chapter-item expanded "><a href="mnode/index.html"><strong aria-hidden="true">1.</strong> The math node</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="mnode/sockets.html"><strong aria-hidden="true">1.1.</strong> Sockets</a></li><li class="chapter-item expanded "><a href="mnode/basic_ops.html"><strong aria-hidden="true">1.2.</strong> Basic operations</a></li><li class="chapter-item expanded "><a href="mnode/shape.html"><strong aria-hidden="true">1.3.</strong> Shape</a></li><li class="chapter-item expanded "><a href="mnode/repetition.html"><strong aria-hidden="true">1.4.</strong> Repetition</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> More Dimensions</div></li></ol></li><li class="chapter-item expanded "><a href="resources.html">Resources</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -172,15 +170,36 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#document-not-found-404" id="document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Try the search instead!</p>
+                        <h1><a class="header" href="#shaders-and-textures" id="shaders-and-textures">Shaders and Textures</a></h1>
+<p>The goal of this book is to build shaders with blenders node editor. Almost all shaders use a Texture node or a Shader node at some point. The good news is that we can already build a whole range of shaders using only a few of these nodes. We will now cover some of the more common Texture and Shader nodes, and go into more uses in later chapters. If you want to find more information about any node, it is always a good idea to look at <a href="https://docs.blender.org/manual/en/latest/render/shader_nodes/">the blender documentation</a>.</p>
+<h2><a class="header" href="#shaders" id="shaders">Shaders</a></h2>
+<p>When you create a new material, the default node tree has two nodes. One of these is the <code>Material Output</code> node which is the final output of the shader. The other is the <code>Principled BSDF</code> which is a very powerful all-in-one shader. By just changing the values of the <code>Principled BSDF</code>, you can get the basic look of most materials. This is the basis for most node trees, where textures are plugged into the sockets of the <code>Principled BSDF</code> to vary the material properties over the surface. On common way to use it, is to combine texture maps (think of diffuse map, roughness map, normal map, etc.) into one material. There is even a very easy way to do this if you have the node wrangler add-on enabled. Just press <code>CTRL + SHIFT + T</code> on the <code>Principled BSDF</code>, and select the maps you need. This book is for procedural shaders, however, so we won't be using image textures. </p>
+<p>Other than the <code>Principled BSDF</code>, the most common surface shader nodes are the <code>Emission</code> shader and the <code>Glass BSDF</code> (Although you can technically use the <code>Principled BSDF</code>for these as well). The <code>Emission</code> shader is particularly interesting, because it does not interact with other rays in the scene, which makes it very easy to compute. For this reason the <code>Emission</code> shader is often used to preview the node tree at some point. With node wrangler, you can preview a node by pressing <code>SHIFT + CTRL + LMB</code> on that node. The <code>Glass BSDF</code> is used when creating glass like objects, but this does not come up very often when creating procedural shaders. </p>
+<h2><a class="header" href="#textures" id="textures">Textures</a></h2>
+<p>The two most common <code>Textures Nodes</code> are the <code>Noise Texture</code>, and the <code>Voronoi Texture</code>. The <code>Noise Texture</code> generates smooth variations which are layered on top of each other with different scales and amplitudes to create fractal noise. The amount of layers can be controlled with the <code>Detail</code> socket, with 0 being one smooth layer. The <code>Noise Texture</code> can be used to create natural looking surface variations and imperfections. To control the output of the texture, we can use the <code>Map Range</code> node, a node that we will cover in detail in later chapters. The <code>Voronoi Texture</code> creates cells which are very useful for shaders, where you need to distribute some things randomly over a surface. This can be things like cracks in ice or pebbles on the ground. </p>
+<p float="left">
+  <img src="images/noise.png" alt="Noise Texture" width="49.5%" />
+  <img src="images/voronoi.png" alt="Voronoi Texture" width="49.5%" /> 
+</p>
+<p>The image on the left is a <code>Noise Texture</code>, and the image on the right is a <code>Voronoi Texture</code>.</p>
+<h2><a class="header" href="#example" id="example">Example</a></h2>
+<p>A car paint like material with varying roughness to mimic fingerprints. The <code>Map Range</code> node is used to increase the contrast in the texture, and limit the roughness to a range of <code>[0.05, 0.2]</code>. In practice the maximum roughness should be lower to create a more subtle effect. The idea is that you should only notice the imperfections if you remove them, but this way it's clearly visible on the final image. You can see the output of the <code>Map Range</code> node in the second image.
+<img src="images/car_paint.png" alt="Car Paint" /> <img src="images/roughness.png" alt="Roughness" /></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="shaders.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="mnode/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -190,7 +209,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="shaders.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a rel="next" href="mnode/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 

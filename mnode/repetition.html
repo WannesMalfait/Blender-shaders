@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Repetition - Blender Shaders</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Blender shaders</a></li><li class="chapter-item expanded affix "><a href="../shaders.html">What is a shader</a></li><li class="chapter-item expanded affix "><a href="../shaders_and_textures.html">Shaders and Textures</a></li><li class="chapter-item expanded "><a href="../mnode/index.html"><strong aria-hidden="true">1.</strong> The math node</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../mnode/sockets.html"><strong aria-hidden="true">1.1.</strong> Sockets</a></li><li class="chapter-item expanded "><a href="../mnode/basic_ops.html"><strong aria-hidden="true">1.2.</strong> Basic operations</a></li><li class="chapter-item expanded "><a href="../mnode/shape.html"><strong aria-hidden="true">1.3.</strong> Shape</a></li><li class="chapter-item expanded "><a href="../mnode/repetition.html" class="active"><strong aria-hidden="true">1.4.</strong> Repetition</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> More Dimensions</div></li></ol></li><li class="chapter-item expanded "><a href="../resources.html">Resources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Blender Shaders</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/WannesMalfait/Blender-shaders" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#repetition" id="repetition">Repetition</a></h1>
+<p>It is very often the case that some pattern appears multiple times on the same material. Think of things like floor tiles, honeycombs, fabrics etc. In this case it is useful to be able to work on one instance of the pattern, and then have it repeat multiple times automatically. The way that we can do this in shaders is by manipulating the input ranges of our pattern to repeat themselves. We can then add some imperfections on top to break up the pattern. Once we move to more dimensions we will see that this is a very powerful tool for creating all sorts of procedural shaders.</p>
+<p><img src="images/fabric_pattern.jpg" alt="Fabric Pattern" /></p>
+<h2><a class="header" href="#creating-a-repetition" id="creating-a-repetition">Creating a repetition</a></h2>
+<p>The easiest way to create a repeating range is to use the <code>Fract</code> mode of the <code>Math</code> node. It takes the decimal or fractional part of a number and discards the rest. This means that 0.7 gets sent to 0.7 but 1.24 gets sent to 0.24. Let's take a look at what happens when we plug the range <code>[0, 2]</code> in. The values less than 1 will stay the same, for the other values the &quot;1&quot; in front will be removed, and we'll get a duplicate of the range <code>[0,1]</code>. Like this we have created a repetition of the range <code>[0,1]</code>. The <code>Fract</code> mode is a specific case of the more general <code>Modulo</code> operation. </p>
+<p>The <code>Modulo</code> operation takes in an additional argument, the point at which we want to start wrapping. For <code>Fract</code> we start wrapping at one, i.e. once we have more than just a decimal part. If we instead start wrapping at two, for example, then the range <code>[0,2]</code> stays unchanged, except for the point 2, which wraps back to 0. The range <code>[0,4]</code> gets sent to two copies of the range <code>[0,2]</code>. Experiment with the <a href="#graphs">graphs</a> to get a better feel for how it works. </p>
+<p>Another function that we can use is the <code>Sine</code> function. We already encountered it in the previous section. It also repeats ranges, but in a smooth way. Unlike the <code>Modulo</code> operation, the shape of the range gets changed by the <code>Sine</code> function. It also differs in the fact that it wraps at \(2\pi\), the circumference of a unit circle. This is no coincidence, because the <code>Sine</code> function can be seen as the height of a point that is moving around a circle. Once the point has completed a full journey around the circle, the pattern repeats.</p>
+<h3><a class="header" href="#magic" id="magic">Magic?</a></h3>
+<p>With the functions described above, we can easily create a repetition where a change to one of the copies is repeated across all other copies. You can easily test this yourself in blender. Start from the following node group and try changing the nodes that come afterwards. You will see that the pattern changes in all copies!</p>
+<p><img src="images/repetition.png" alt="Repetition node group" /></p>
+<p>As an exercise you can try to change the nodes so that the repetition uses the <code>Sine</code> function instead. Hint: you will need to remap the range to <code>[0, 2*pi]</code> before using the <code>Sine</code> function, if you want the number of repetitions to be correct.</p>
+<h3><a class="header" href="#graphs" id="graphs">Graphs</a></h3>
+<iframe src="https://graphtoy.com/?f1(x,t)=fract(x)&v1=true&f2(x,t)=mod(x,%202)&v2=true&f3(x,t)=sin(x)&v3=true&f4(x,t)=floor(x)&v4=true&f5(x,t)=&v5=false&f6(x,t)=&v6=false&grid=true&coords=0,0,15.972000000000234"
+name="Repetition" height = "700" style="border: none; display: block; margin: 2 auto; width: 100%"> </iframe>
+<h2><a class="header" href="#accessing-individual-elements-in-a-repetition" id="accessing-individual-elements-in-a-repetition">Accessing individual elements in a repetition</a></h2>
+<p>So what if we want to break up the pattern? If we add some noise after the repetition, it doesn't break up the pattern because the noise will be repeated too. If we add it before the repetition, then the pattern will be distorted. We need to split the range into two parts: the repeated pattern, and the variation for each copy. We have already tackled the repetition, we will now handle the variation. For this we will use the <code>Floor</code> mode.</p>
+<p>While the <code>Fract</code> mode takes the fractional part, the <code>Floor</code> mode takes the whole number part. (For negative numbers this is not entirely true, but that doesn't really matter for what we will use it for). The graph of the <code>Floor</code> function looks like a staircase. The <code>Fract</code> and the <code>Floor</code> mode also have a very nice mathematical relationship: <code>fract(x) + floor(x) = x</code>. This is because the <code>Floor</code> function tells us in which copy we are, while the <code>Fract</code> function tells us where in the copy we are. The combined information says exactly where we are. The <code>Floor</code> function has only one value per copy. This means that any noise that use after the <code>Floor</code> function will have the same value on one copy, but different values for each copy. </p>
+<h2><a class="header" href="#example-1d-noise" id="example-1d-noise">Example: 1D noise</a></h2>
+<p>These explanations are all nice and well, but let's have a look at how we can actually use them. If we want a random value per pixel, we can use the <code>White Noise Texture</code> node. More often than not, we instead want a smooth kind of noise. For this we can use the <code>Noise Texture</code>. We will now see how you can use the <code>White Noise</code> texture to make the <code>Noise Texture</code> in the one-dimensional case.</p>
+<h3><a class="header" href="#repetition-1" id="repetition-1">Repetition</a></h3>
+<p>Because we are in search of &quot;smooth&quot; noise, we don't want a random value per pixel. Instead, we want to have control over the spacing of the random values. We will then interpolate between the different values to create a smooth transition. The first node tree looks like this: </p>
+<p><img src="images/1d_noise.png" alt="1D Noise 1" /></p>
+<p>It just gives us a random value per cell/copy of the input range. This works because the <code>Floor</code> function is constant over each copy, and thus the random value from the <code>White Noise Texture</code> is also constant for each copy.</p>
+<h3><a class="header" href="#interpolation" id="interpolation">Interpolation</a></h3>
+<p>To interpolate between two values, we first need two values. Currently we only have one value, i.e. the one generated by the white noise texture. For the second value we will use the random value of the copy to the right. To access this value we can just shift the input range by 1, because the ranges are wrapped at 1. You can verify for yourself that this works by comparing the outputs of the two <code>White Noise Texture</code> nodes.</p>
+<p><img src="images/1d_noise2.png" alt="1D Noise 2" /></p>
+<p>The interpolation itself is easy now. We just need to add a <code>Map Range</code> node. For the <code>Value</code> socket we can plug in the ranges generated by the <code>Fract</code> node. Since these go from 0 to 1 we can leave the <code>From min</code> and <code>From max</code> sockets unchanged. For the <code>To min</code> socket we can use the first randomly generated value, and for the <code>To max</code> socket we can use the value of the copy to the right. This will make it so that the values transition from the value of this copy to the value of the right copy as we move from left to right. As a final step we can set the interpolation mode to &quot;Smootherstep&quot; to get a smooth shape as a result.</p>
+<p><img src="images/1d_noise3.png" alt="1D Noise 3" /></p>
+<h3><a class="header" href="#layers" id="layers">Layers</a></h3>
+<p>The observant among you may have noticed that the <code>Noise Texture</code> node has more options than just <code>Scale</code>. This is because it uses <code>Fractal Brownian Motion</code>. Multiple copies of the node group that we have just made are added on top each other with decreasing scales. The <code>Detail</code> socket controls how many layers. The <code>Roughness</code> socket determines by how much we scale down the consequent layers, so that the smaller details will contribute less to the final result. Although we can add layers manually by copying our node groups, there is currently no way to procedurally control how many layers we have. For that reason we will not implement this aspect of the <code>Noise Texture</code> node in our version.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../mnode/shape.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../resources.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../mnode/shape.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../resources.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
